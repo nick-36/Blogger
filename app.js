@@ -46,8 +46,12 @@ app.use(passport.session());
 
 
 //To Connect the database
-mongoose.connect("mongodb://localhost:27017/blogDB", { useNewUrlParser: true, useUnifiedTopology: true  });
+// mongoose.connect("mongodb://localhost:27017/blogDB", { useNewUrlParser: true, useUnifiedTopology: true  });
 
+mongoose.connect("mongodb+srv://admin-Nikhil:Nikhil@2001@cluster0.d4duu.mongodb.net/blogDB", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 //To remove Deprication Warning
 mongoose.set("useCreateIndex", true);
@@ -57,6 +61,7 @@ mongoose.set("useCreateIndex", true);
 const blogSchema =new mongoose.Schema(  {
   title: String,
   content: String,
+  
 });
 
 const userSchema = new mongoose.Schema({
@@ -152,6 +157,7 @@ app.post("/login", (req, res) => {
   const user = new User({
     username: req.body.username,
     password: req.body.password,
+
   });
   req.login(user, function (err) {
     if (err) {
@@ -187,7 +193,7 @@ app.get('/auth/google/blogic',
     res.redirect('/home');
   });
 
-  app.get('/logout', function(req, res){
+app.get('/logout', function(req, res){
     req.logout();
     res.redirect('/');
   });
